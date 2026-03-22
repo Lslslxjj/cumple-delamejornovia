@@ -121,10 +121,8 @@ let contador = document.getElementById("contador");
 let mensaje = document.getElementById("mensaje");
 
 function iniciarTodo() {
-    document.getElementById("musica").play();
     document.getElementById("btnInicio").style.display = "none";
 }
-
 let intervalo = setInterval(() => {
     let ahora = new Date().getTime();
     let diferencia = fechaObjetivo - ahora;
