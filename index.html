@@ -97,14 +97,14 @@ h1 {
     <img src="foto5.jpg">
 </div>
 
-<audio id="musica" autoplay loop>
+<audio id="musica" loop>
     <source src="cancion.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-// ⚠️ CAMBIA LA FECHA SI ES NECESARIO
-let fechaObjetivo = new Date("Mar 21, 2026 21:12:00").getTime();
+// ⏳ FECHA (AJUSTA SI QUIERES)
+let fechaObjetivo = new Date("Mar 21, 2026 00:00:00").getTime();
 
 // 💌 MENSAJE
 let texto = `Hoy, para muchos, es un día normal, un día con poco sentido. Pero para mí es un día especial, porque es tu cumpleaños. Y digo que es especial para mí, porque sé que lo es para ti; y al ser especial para ti, entonces también lo es para mí.
@@ -120,14 +120,26 @@ Te quiero muchísimo, vida mía. Y recuerda siempre que, estés donde estés, vi
 let contador = document.getElementById("contador");
 let mensaje = document.getElementById("mensaje");
 
+// 🎵 FUNCIÓN CORREGIDA
 function iniciarTodo() {
     let musica = document.getElementById("musica");
-    musica.volume = 0.3; // volumen suave
-    musica.play();
+
+    musica.volume = 0.3;
+
+    let playPromise = musica.play();
+
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            console.log("Música reproduciéndose");
+        }).catch(error => {
+            console.log("Error:", error);
+        });
+    }
 
     document.getElementById("btnInicio").style.display = "none";
 }
 
+// ⏳ CONTADOR
 let intervalo = setInterval(() => {
     let ahora = new Date().getTime();
     let diferencia = fechaObjetivo - ahora;
@@ -149,7 +161,7 @@ let intervalo = setInterval(() => {
     }
 }, 1000);
 
-// ✨ efecto escritura
+// ✨ TEXTO
 function escribirTexto(texto) {
     let i = 0;
     let velocidad = 35;
@@ -166,7 +178,7 @@ function escribirTexto(texto) {
     escribir();
 }
 
-// 📸 mostrar fotos una por una
+// 📸 FOTOS
 function mostrarGaleria() {
     let galeria = document.getElementById("galeria");
     let imagenes = galeria.querySelectorAll("img");
