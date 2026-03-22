@@ -97,7 +97,7 @@ h1 {
     <img src="foto5.jpg">
 </div>
 
-<audio id="musica" loop>
+<audio id="musica" autoplay loop>
     <source src="cancion.mp3" type="audio/mpeg">
 </audio>
 
@@ -121,8 +121,13 @@ let contador = document.getElementById("contador");
 let mensaje = document.getElementById("mensaje");
 
 function iniciarTodo() {
+    let musica = document.getElementById("musica");
+    musica.volume = 0.3; // volumen suave
+    musica.play();
+
     document.getElementById("btnInicio").style.display = "none";
 }
+
 let intervalo = setInterval(() => {
     let ahora = new Date().getTime();
     let diferencia = fechaObjetivo - ahora;
