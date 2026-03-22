@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para ti ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #000000, #1a1a1a);
+    color: #00ffcc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+#contador {
+    font-size: 30px;
+    margin: 20px 0;
+}
+
+#mensaje {
+    display: none;
+    max-width: 700px;
+    font-size: 18px;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+#galeria {
+    display: none;
+    margin-top: 30px;
+}
+
+#galeria img {
+    width: 180px;
+    margin: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #00ffcc;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s ease;
+}
+
+.mostrar {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+}
+
+#btnInicio {
+    padding: 15px 25px;
+    font-size: 18px;
+    background: #00ffcc;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.fade {
+    animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+</style>
+</head>
+
+<body>
+
+<button onclick="iniciarTodo()" id="btnInicio">
+    Toca aquí, tengo algo para ti ❤️
+</button>
+
+<h1>Algo especial está por suceder... ❤️</h1>
+<div id="contador"></div>
+
+<div id="mensaje"></div>
+
+<div id="galeria">
+    <img src="foto1.jpg">
+    <img src="foto2.jpg">
+    <img src="foto3.jpg">
+    <img src="foto4.jpg">
+    <img src="foto5.jpg">
+</div>
+
+<audio id="musica" loop>
+    <source src="cancion.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// ⚠️ CAMBIA LA FECHA SI ES NECESARIO
+let fechaObjetivo = new Date("Mar 22, 2026 00:00:00").getTime();
+
+// 💌 MENSAJE
+let texto = `Hoy, para muchos, es un día normal, un día con poco sentido. Pero para mí es un día especial, porque es tu cumpleaños. Y digo que es especial para mí, porque sé que lo es para ti; y al ser especial para ti, entonces también lo es para mí.
+
+Sabes, sé que pocas veces te he dicho lo importante que eres para mí y lo difícil que se me hace imaginar mi vida sin que tú estés presente en cada día y en cada momento. También sé que a veces soy grosero y que puedo ser un dolor de cabeza, pero aun así me soportas y me quieres, y eso lo agradezco y lo valoro muchísimo.
+
+Sin darme cuenta, te has convertido en esa persona que ha logrado corregir muchas cosas en mí. Y así como me corriges, también me aceptas, y eso es lo que tanto me gusta de ti.
+
+Hoy cumples 17 años, mi bebé, y para mí es un orgullo y una alegría poder decirte: feliz cumpleaños. Es un privilegio tener a una persona tan especial en mi vida: una excelente amiga, una gran novia, una buena hija y una maravillosa hermana.
+
+Te quiero muchísimo, vida mía. Y recuerda siempre que, estés donde estés, vivirás en mi corazón, porque te lo has ganado y has sabido marcar de una manera muy bonita una gran parte de mi vida. ❤️`;
+
+let contador = document.getElementById("contador");
+let mensaje = document.getElementById("mensaje");
+
+function iniciarTodo() {
+    document.getElementById("musica").play();
+    document.getElementById("btnInicio").style.display = "none";
+}
+
+let intervalo = setInterval(() => {
+    let ahora = new Date().getTime();
+    let diferencia = fechaObjetivo - ahora;
+
+    let horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+    let segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+    contador.innerHTML = horas + "h " + minutos + "m " + segundos + "s";
+
+    if (diferencia < 0) {
+        clearInterval(intervalo);
+        document.querySelector("h1").style.display = "none";
+        contador.style.display = "none";
+        mensaje.style.display = "block";
+        mensaje.classList.add("fade");
+
+        escribirTexto(texto);
+    }
+}, 1000);
+
+// ✨ efecto escritura
+function escribirTexto(texto) {
+    let i = 0;
+    let velocidad = 35;
+
+    function escribir() {
+        if (i < texto.length) {
+            mensaje.innerHTML += texto.charAt(i);
+            i++;
+            setTimeout(escribir, velocidad);
+        } else {
+            mostrarGaleria();
+        }
+    }
+    escribir();
+}
+
+// 📸 mostrar fotos una por una
+function mostrarGaleria() {
+    let galeria = document.getElementById("galeria");
+    let imagenes = galeria.querySelectorAll("img");
+
+    galeria.style.display = "block";
+
+    imagenes.forEach((img, index) => {
+        setTimeout(() => {
+            img.classList.add("mostrar");
+        }, index * 800);
+    });
+}
+
+</script>
+
+</body>
+</html>
